@@ -1,16 +1,18 @@
 <div class="dashboard-page">
   <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top shadow-sm">
     <div class="container-fluid px-3 px-lg-4">
-      <span class="navbar-brand fw-bold text-success">Transicion Energetica Colombia</span>
+      <span class="navbar-brand fw-bold text-success">Transición Energética Dashboard</span>
       <div class="d-flex align-items-center gap-2">
         <span class="small text-secondary d-none d-sm-inline">Rol: ADMIN</span>
-        <button class="btn btn-outline-danger btn-sm" (click)="logout()">Cerrar sesion</button>
+        <button class="btn btn-outline-danger btn-sm" (click)="logout()">Cerrar sesión</button>
       </div>
     </div>
   </nav>
 
   <main class="container-fluid py-4 px-3 px-lg-4">
-    <div class="alert alert-danger" *ngIf="error()">{{ error() }}</div>
+    @if (error()) {
+      <div class="alert alert-danger">{{ error() }}</div>
+    }
 
     <section class="card border-0 shadow-sm mb-4">
       <div class="card-body">
@@ -18,11 +20,11 @@
 
         <form [formGroup]="filtersForm" class="row g-3 align-items-end" (ngSubmit)="applyFilters()">
           <div class="col-6 col-md-3 col-xl-2">
-            <label class="form-label" for="year">Ano base</label>
+            <label class="form-label" for="year">Año base</label>
             <input id="year" class="form-control" type="number" formControlName="year" />
           </div>
           <div class="col-6 col-md-3 col-xl-2">
-            <label class="form-label" for="topYear">Ano eolica (top)</label>
+            <label class="form-label" for="topYear">Año eólica (top)</label>
             <input id="topYear" class="form-control" type="number" formControlName="topYear" />
           </div>
           <div class="col-6 col-md-3 col-xl-2">
@@ -30,11 +32,11 @@
             <input id="topSource" class="form-control" type="text" formControlName="topSource" />
           </div>
           <div class="col-6 col-md-3 col-xl-2">
-            <label class="form-label" for="topLimit">Limite top</label>
+            <label class="form-label" for="topLimit">Límite top</label>
             <input id="topLimit" class="form-control" type="number" formControlName="topLimit" />
           </div>
           <div class="col-6 col-md-4 col-xl-2">
-            <label class="form-label" for="trendCountry">Pais tendencia</label>
+            <label class="form-label" for="trendCountry">País tendencia</label>
             <input id="trendCountry" class="form-control" type="text" formControlName="trendCountry" />
           </div>
           <div class="col-6 col-md-4 col-xl-2">
@@ -42,12 +44,14 @@
             <input id="trendSource" class="form-control" type="text" formControlName="trendSource" />
           </div>
           <div class="col-12 col-md-4 col-xl-4">
-            <label class="form-label" for="renewableRegionSearch">Filtro region (% renovable)</label>
+            <label class="form-label" for="renewableRegionSearch">Filtro región</label>
             <input id="renewableRegionSearch" class="form-control" type="text" formControlName="renewableRegionSearch" />
           </div>
           <div class="col-12 col-xl-2">
             <button class="btn btn-success w-100" [disabled]="loading()">
-              <span *ngIf="loading()" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+              @if (loading()) {
+                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+              }
               {{ loading() ? 'Actualizando...' : 'Aplicar filtros' }}
             </button>
           </div>
@@ -59,7 +63,7 @@
       <div class="col-6 col-md-3">
         <div class="metric-card card border-0 shadow-sm h-100">
           <div class="card-body">
-            <p class="text-secondary mb-1">Registros produccion</p>
+            <p class="text-secondary mb-1">Registros producción</p>
             <p class="h4 mb-0">{{ productionCount() }}</p>
           </div>
         </div>
@@ -94,7 +98,7 @@
       <div class="col-12 col-xl-8">
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body">
-            <h3 class="h6 mb-3">Produccion total por fuente y region</h3>
+            <h3 class="h6 mb-3">Producción total por fuente y region</h3>
             <canvas baseChart [data]="productionChartData()" [options]="productionChartOptions" [type]="productionChartType"></canvas>
           </div>
         </div>
@@ -103,7 +107,7 @@
       <div class="col-12 col-xl-4">
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body">
-            <h3 class="h6 mb-3">Participacion global por fuente (%)</h3>
+            <h3 class="h6 mb-3">Participación global por fuente (%)</h3>
             <canvas baseChart [data]="globalShareChartData()" [type]="globalShareChartType"></canvas>
           </div>
         </div>
@@ -112,7 +116,7 @@
       <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body">
-            <h3 class="h6 mb-3">Porcentaje renovable por region</h3>
+            <h3 class="h6 mb-3">Porcentaje renovable por región</h3>
             <canvas baseChart [data]="renewableChartData()" [options]="renewableChartOptions" [type]="renewableChartType"></canvas>
           </div>
         </div>
@@ -130,7 +134,7 @@
       <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body">
-            <h3 class="h6 mb-3">Top productores (grafico)</h3>
+            <h3 class="h6 mb-3">Top productores (gráfico)</h3>
             <canvas baseChart [data]="topChartData()" [options]="topChartOptions" [type]="topChartType"></canvas>
           </div>
         </div>
@@ -139,21 +143,23 @@
       <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body table-responsive">
-            <h3 class="h6 mb-3">Top 10 paises con mayor produccion eolica</h3>
+            <h3 class="h6 mb-3">Top 10 países con mayor producción eólica</h3>
             <table class="table table-sm table-striped align-middle">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Pais</th>
-                  <th class="text-end">Produccion (TWh)</th>
+                  <th>País</th>
+                  <th class="text-end">Producción (TWh)</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row of topProducersTable(); let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ row.pais }}</td>
-                  <td class="text-end">{{ row.value_twh | number: '1.2-2' }}</td>
-                </tr>
+                @for (row of topProducersTable(); track $index; let i = $index) {
+                  <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ row.pais }}</td>
+                    <td class="text-end">{{ row.value_twh | number: '1.2-2' }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

@@ -4,36 +4,40 @@
       <div class="col-12 col-md-8 col-lg-5">
         <div class="card shadow border-0">
           <div class="card-body p-4 p-lg-5">
-            <h1 class="h3 fw-bold mb-2">Iniciar sesion</h1>
-            <p class="text-secondary mb-4">Accede como administrador para ver el dashboard energetico.</p>
+            <h1 class="h3 fw-bold mb-2">Iniciar sesión</h1>
+            <p class="text-secondary mb-4">Accede como administrador para ver el dashboard energético.</p>
 
-            <div class="alert alert-danger" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+            @if (errorMessage()) {
+              <div class="alert alert-danger">{{ errorMessage() }}</div>
+            }
 
             <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
               <div class="mb-3">
                 <label for="email" class="form-label">Correo</label>
-                <input id="email" type="email" class="form-control" formControlName="email" />
-                <div class="invalid-feedback d-block" *ngIf="form.controls.email.touched && form.controls.email.invalid">
-                  Ingresa un correo valido.
-                </div>
+                <input id="email" type="email" class="form-control" formControlName="email"/>
+                @if (form.controls.email.touched && form.controls.email.invalid) {
+                  <div class="invalid-feedback d-block">Ingresa un correo válido.</div>
+                }
               </div>
 
               <div class="mb-4">
-                <label for="password" class="form-label">Contrasena</label>
+                <label for="password" class="form-label">Contraseña</label>
                 <input id="password" type="password" class="form-control" formControlName="password" />
-                <div class="invalid-feedback d-block" *ngIf="form.controls.password.touched && form.controls.password.invalid">
-                  La contrasena debe tener minimo 6 caracteres.
-                </div>
+                @if (form.controls.password.touched && form.controls.password.invalid) {
+                  <div class="invalid-feedback d-block">La contraseña debe tener mínimo 6 caracteres.</div>
+                }
               </div>
 
               <button class="btn btn-success w-100" [disabled]="loading()">
-                <span *ngIf="loading()" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                {{ loading() ? 'Ingresando...' : 'Iniciar sesion' }}
+                @if (loading()) {
+                  <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                }
+                {{ loading() ? 'Ingresando...' : 'Iniciar sesión' }}
               </button>
             </form>
 
             <p class="text-center mt-4 mb-0 small">
-              No tienes cuenta?
+              ¿No tienes cuenta?
               <a routerLink="/register" class="link-success">Registrarse</a>
             </p>
           </div>

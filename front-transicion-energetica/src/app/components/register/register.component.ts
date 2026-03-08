@@ -53,6 +53,7 @@ export class RegisterComponent {
       },
       error: (error: Error) => {
         this.errorMessage.set(error.message || 'No fue posible registrar el usuario.');
+        this.loading.set(false)
       },
       complete: () => this.loading.set(false)
     });

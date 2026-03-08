@@ -134,6 +134,7 @@ export class DashboardComponent implements OnInit {
       },
       error: (error) => {
         this.error.set(error?.error?.message || 'No fue posible cargar los datos del dashboard.');
+        this.loading.set(false);
       },
       complete: () => {
         this.loading.set(false);
