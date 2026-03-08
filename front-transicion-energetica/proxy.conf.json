@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "http://localhost:8083",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/swagger-ui": {
+    "target": "http://localhost:8083",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/v3/api-docs": {
+    "target": "http://localhost:8083",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

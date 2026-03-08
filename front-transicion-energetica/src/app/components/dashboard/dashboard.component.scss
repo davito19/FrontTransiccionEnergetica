@@ -1,0 +1,12 @@
+.dashboard-page {
+  min-height: 100dvh;
+  background: radial-gradient(circle at 0% 0%, #f4fff8 0%, #ffffff 50%);
+}
+
+.metric-card {
+  border-left: 4px solid #198754;
+}
+
+canvas {
+  max-height: 360px;
+}

@@ -1,0 +1,63 @@
+<div class="auth-page">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-9 col-lg-6">
+        <div class="card shadow border-0">
+          <div class="card-body p-4 p-lg-5">
+            <h1 class="h3 fw-bold mb-2">Registro de usuario</h1>
+            <p class="text-secondary mb-4">Crea una cuenta para el sistema de transicion energetica.</p>
+
+            <div class="alert alert-success" *ngIf="successMessage()">{{ successMessage() }}</div>
+            <div class="alert alert-danger" *ngIf="errorMessage()">{{ errorMessage() }}</div>
+
+            <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Nombre completo</label>
+                <input id="fullName" class="form-control" formControlName="fullName" />
+                <div class="invalid-feedback d-block" *ngIf="form.controls.fullName.touched && form.controls.fullName.invalid">
+                  El nombre debe tener al menos 3 caracteres.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo</label>
+                <input id="email" type="email" class="form-control" formControlName="email" />
+                <div class="invalid-feedback d-block" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+                  Ingresa un correo valido.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Contrasena</label>
+                <input id="password" type="password" class="form-control" formControlName="password" />
+                <div class="invalid-feedback d-block" *ngIf="form.controls.password.touched && form.controls.password.invalid">
+                  La contrasena debe tener minimo 6 caracteres.
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="role" class="form-label">Rol</label>
+                <select id="role" class="form-select" formControlName="role">
+                  <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+                </select>
+              </div>
+
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-outline-secondary" (click)="goToLogin()">Cancelar</button>
+                <button class="btn btn-success" [disabled]="loading()">
+                  <span *ngIf="loading()" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                  {{ loading() ? 'Guardando...' : 'Registrar' }}
+                </button>
+              </div>
+            </form>
+
+            <p class="text-center mt-4 mb-0 small">
+              Ya tienes cuenta?
+              <a routerLink="/login" class="link-success">Iniciar sesion</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
